@@ -35,3 +35,8 @@ button {
   border: none;
   cursor: pointer;
 }
+
+.card {
+  transition: transform 0.3s ease;
+  touch-action: none;
+}
