@@ -29,7 +29,9 @@ function fetchCat() {
   if (catCount >= maxCats) return;
 
   setButtonsEnabled(false); // Disable buttons while loading
+  allowSwipe = false; // Disable swiping while loading
   loadingText.style.display = "block";
+  loadingText.textContent = "Loading cat... 🐈";
   catImage.hidden = true;
 
   // Using json to get a url that can be used to download the cat image
@@ -43,6 +45,7 @@ function fetchCat() {
         loadingText.style.display = "none";
         catImage.hidden = false;
         setButtonsEnabled(true); // Enable buttons after image loads
+        allowSwipe = true;  // Enable swiping after image fully loads
       };
 
       catImage.onerror = () => {
