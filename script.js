@@ -1,16 +1,14 @@
-// onload of website windows run the fetchCat and button listners
-window.onload = () => {
-  fetchCat();
-  addListeners();
-  enableDragSwipe();
-};
-
 const card = document.getElementById("card");
 const loadingText = document.getElementById("loading-text");
 const catImage = document.getElementById("cat-img");
 const loveButton = document.getElementById("love-btn");
 const skipButton = document.getElementById("skip-btn");
 const favouriteHistory = document.getElementById("history");
+const modal = document.getElementById("intro-modal");
+const startBtn = document.getElementById("start-btn");
+const swipeContent = document.getElementById("swipe-content");
+const toggleButton = document.getElementById("toggle-cat-dog");
+const title = document.getElementById("page-title");
 
 let favouriteCats = [];
 let currentCatUrl = ""; // to save the current displayed cat's URL
@@ -18,6 +16,7 @@ let latestfavouritCatURL = "";
 let catCount = 0;
 const maxCats = 20;
 let allowSwipe = true;
+let currentCatType = "image";
 
 function setButtonsEnabled(enabled) {
   loveButton.disabled = !enabled;
@@ -34,28 +33,47 @@ function fetchCat() {
   loadingText.textContent = "Loading cat... 🐈";
   catImage.hidden = true;
 
-  // Using json to get a url that can be used to download the cat image
-  fetch(`https://cataas.com/cat?json=true&timestamp=${Date.now()}`)
-    .then(response => response.json())
-    .then(data => {
-      currentCatUrl = data.url; // Full image URL
-      catImage.src = currentCatUrl;
+  loadingText.textContent = currentCatType === "dog"
+    ? "Fetching good boi... 🐶"
+    : "Loading cat... 🐈";
+  catImage.hidden = true;
 
+  const endpoint =
+    currentCatType === "dog"
+      ? "https://dog.ceo/api/breeds/image/random"
+      : "https://cataas.com/cat?json=true";
+
+  // Using json to get a url that can be used to download the cat/dog image
+  fetch(endpoint)
+    .then((response) => response.json())
+    .then((data) => {
+      currentCatUrl =
+        currentCatType === "dog"
+          ? data.message // full image URL for dogs
+          : data.url; // full image URL for cats
+
+      catImage.src = currentCatUrl;
+      catImage.alt = currentCatType === "dog" ? "Random Dog" : "Cute Cat";
+      
       catImage.onload = () => {
         loadingText.style.display = "none";
         catImage.hidden = false;
         setButtonsEnabled(true); // Enable buttons after image loads
         allowSwipe = true;  // Enable swiping after image fully loads
+
+        // Remove background and border after image loads
+        card.style.backgroundColor = "transparent";
+        card.style.border = "none";
       };
 
       catImage.onerror = () => {
-        loadingText.textContent = "Failed to load cat 😿. Retrying...";
+        loadingText.textContent = "Failed to load image 😿 Retrying...";
         fetchCat(); // Retry if image fails
       };
     })
     .catch(() => {
-      loadingText.textContent = "Failed to fetch cat metadata 😿. Retrying...";
-      fetchCat(); // Retry if fetch fails
+      loadingText.textContent = "Failed to fetch image 😿 Retrying...";
+      fetchCat(); // Retry if image fails
     });
 }
 
@@ -229,3 +247,23 @@ function handleAction(type) {
     }
   }, 300); // Add delay to smoothen animation transition using timeout
 }
+
+// onload of website windows run the fetchCat and button listners
+window.onload = () => {
+  startBtn.addEventListener("click", () => {
+    modal.style.display = "none";
+    swipeContent.style.display = "block";
+    fetchCat();
+    addListeners();
+    enableDragSwipe();
+  });
+
+  toggleButton.addEventListener("click", () => {
+    currentCatType = currentCatType === "image" ? "dog" : "image";
+    toggleButton.textContent = currentCatType === "dog" ? "🐶 Dog Images" : "🐱 Cat Images";
+
+    title.textContent = currentCatType === "dog" ? "Doggo Match 🐶" : "Meow Match 🐱";
+    document.title = currentCatType === "dog" ? "Doggo Match 🐶" : "Meow Match 🐱";
+    fetchCat(); // reload cat based on type
+  });
+};

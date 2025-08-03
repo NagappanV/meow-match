@@ -3,11 +3,11 @@ body {
   flex-direction: column;
   align-items: center;
   font-family: Arial, sans-serif;
-  background-color: #f9f9f9;
+  background-color: #e0f4ff;
+  color: #2a4d75;
   margin: 0;
   padding: 1rem;
   text-align: center;
-  color: #363636;
   min-height: 100vh;
 }
 
@@ -15,6 +15,7 @@ body {
   margin-top: 2rem;
   width: 100%;
   max-width: 900px;
+  display: none;
 }
 
 /* Card area */
@@ -23,12 +24,13 @@ body {
   max-width: 900px;
   height: 40vh;
   max-height: 900px;
-  border-radius: 12px;
   overflow: overlay;
-  background-color: #fff;
+  background-color: #e0f4ff; 
+  border: 2px solid #b3d9ff;
+  border-radius: 16px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
   transition: transform 0.3s ease;
   touch-action: none;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
   margin: auto;
   display: flex;
   align-items: center;
@@ -60,14 +62,14 @@ button {
   background: none;
   border: none;
   cursor: pointer;
-  background-color: #eee;
+  background-color: #b3d9ff;
   border-radius: 30px;
   transition: 0.2s ease;
   width: 10rem;
 }
 
 button:hover {
-  background-color: #ddd;
+  background-color: #99ccff;
   transform: scale(1.05);
 }
 
@@ -80,6 +82,10 @@ button:disabled {
 @media (max-width: 600px) {
   #buttons {
     display: none;
+  }
+
+  .header {
+    flex-direction: column;
   }
 }
 
@@ -103,4 +109,66 @@ button:disabled {
 
 .history img:hover {
   transform: scale(1.1);
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.modal-content {
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 12px;
+  text-align: center;
+  max-width: 90%;
+  color: #2a4d75;
+}
+
+#start-btn {
+  background-color: #b3d9ff;
+}
+
+#start-btn:hover {
+  background-color: #99ccff;
+}
+
+#start-btn:active {
+  background-color: #80bfff;
+}
+
+.header {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+}
+
+#toggle-cat-dog {
+  padding: 0.6rem 1.2rem;
+  background-color: #b3d9ff;
+  color: #103c66;
+  font-weight: bold;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 1rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+#toggle-cat-dog:hover {
+  background-color: #99ccff;
+  transform: scale(1.03);
+}
+
+#toggle-cat-dog:active {
+  background-color: #80bfff;
 }

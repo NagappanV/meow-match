@@ -9,19 +9,33 @@
 </head>
 
 <body>
-  <div class="swipe-container">
-    <h1>Meow Match 🐱</h1>
+  <!-- Modal Message Box -->
+  <div id="intro-modal" class="modal">
+    <div class="modal-content">
+      <h2 >Welcome to Meow Match! 🐱</h2>
+      <p>This site helps you find your favourite cat images.</p>
+      <p>Swipe left or tap 💖 if you like the cat, swipe right or tap ➡️ to skip.</p>
+      <p>You can also tap to switch Between 🐱 Cat Images or Random Dogs 🐶.</p>
+      <button id="start-btn"  type="button">Okay, Let's Go!</button>
+    </div>
+  </div>
 
+  <!-- Selection Dropdown -->
+  <div class="header">
+    <button id="toggle-cat-dog" type="button">🐱 Cat Images</button>
+  </div>
+
+  <!-- Swipe Containor and History -->
+  <div class="swipe-container" id="swipe-content">
+    <h1 id="page-title">Meow Match 🐱</h1>
     <div class="card" id="card">
       <p id="loading-text" class="loading">Loading cat... 🐈</p>
-      <img id="cat-img" alt="Cute cat" draggable="false" />
-
+      <img id="cat-img" alt="" draggable="false" />
     </div>
-    <div class="buttons">
-      <button id="love-btn">💖 Like</button>
-      <button id="skip-btn">➡️ Skip</button>
+    <div class="buttons" id="buttons">
+      <button id="love-btn"  type="button">💖 Like</button>
+      <button id="skip-btn"  type="button">➡️ Skip</button>
     </div>
-
     <h2>Your Favorites</h2>
     <div class="history" id="history"></div>
   </div>
